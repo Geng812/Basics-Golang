@@ -3,22 +3,21 @@ package controller
 import (
 	"DataBase/connect"
 	"DataBase/model"
-
-	"github.com/gin-gonic/gin"
 )
 
-type Test struct{}
+var data string
 
-func Config() *Test {
-  return &Test{}
-}
+func FindeOne() (err error) {
+	//func (t *Test) FindeOne(c *gin.Context) {
+	db := connect.DB
+	defer db.Close()
 
-func (t *Test) FindOne(c *gin.Context) {
-  db := connect.InitDB()
-  defer db.Close()
-  
-  var n model.Test
-  
-  result := db.First(&n)
-  
+	var porgs []model.Tests
+	result := db.First(&porgs)
+
+	if result.Error != nil {
+		err = result.Error
+		return
+	}
+	return
 }
