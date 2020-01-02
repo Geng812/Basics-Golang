@@ -5,12 +5,19 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-func InitDB() *gorm.DB {
-  db, err := gorm.Open("mysql", "account:password@/dbname?charset=utf8&parseTime=True&loc=Local")
-  
-  if err != nil {
-    panic("failed to connect database!!")
-  }
-  
-  return db
+var DB *gorm.DB
+
+func InitDB() {
+	var err error
+	DB, err := gorm.Open("mysql", "account:password@/WebT?charset=utf8")
+	//defer DB.Close()
+
+	if err != nil {
+		panic("failed to connect database !")
+	}
+
+	if DB.Error != nil {
+		panic("database error ")
+	}
+	//return DB
 }
