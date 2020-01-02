@@ -1,23 +1,24 @@
-package router
+package tmp
 
 import (
-	"net/http"
-
-	"DataBase/controller"
+	"Web/handler"
 
 	"github.com/gin-gonic/gin"
 )
 
-func Init() {
+func Table() *gin.Engine {
+	r := gin.Default()
+	r.LoadHTMLGlob("/Users/nick/go/src/templates/html/*")
 
-  r := gin.Default()
-  
-  r.GET("/", Home)
+	homeRouting := r.Group("/")
+	{
+		homeRouting.GET("", handler.Messages)
+	}
 
-  page := r.Group("/report")
-  {
-    page.GET("\daily", ReportDaily)
-  }
-  
-  r.RUN(":8080")
+	dbRouting := r.Group("/db")
+	{
+		dbRouting.GET("", handler.GetData)
+	}
+
+	return r
 }
